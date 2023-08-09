@@ -2,3 +2,4 @@ __pycache__/
 config/
 db.sqlite3
 *.pyc
+.superuser
