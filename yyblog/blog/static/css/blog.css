@@ -5,7 +5,6 @@ body {
     margin: 0;
     padding: 0;
     background-color:antiquewhite;
-    font-family: 'Ubuntu', sans-serif;
 }
 
 h1, h2, h3 {
@@ -30,6 +29,10 @@ a:hover {
     color: darkblue;
 }
 
+p {
+    font-family: 'Ubuntu', sans-serif;
+}
+
 .container {
     max-width: 1080px;
     margin: auto;
@@ -49,9 +52,41 @@ a:hover {
     height: 100%;
 }
 
-.date {
+.post_date, .comment_info {
     font-size: 14px;
     font-style: italic;
     color:dimgray;
     margin-top: 5px;
+}
+
+.post_body {
+    font-size: 18px;
+    border-bottom: 1px solid darkgrey;
+}
+
+.comment {
+    border-bottom: 1px solid darkgrey;
+    padding: 0px 10px 0px 10px;
+}
+
+.comment_body {
+    padding-bottom: 0;
+}
+
+.comments_count {
+    color: brown;
+}
+
+.comment_input {
+    font-size: 18px;
+    color: white;
+    padding: 10px 50px;
+    background-color: brown;
+    border: none;
+}
+
+.comment_input:hover {
+    cursor: pointer;
+    background-color: darkgrey;
+    transition: 0.2s;
 }

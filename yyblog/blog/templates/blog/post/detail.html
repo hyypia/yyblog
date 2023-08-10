@@ -3,8 +3,35 @@
 
 {% block content %}
     <h1>{{ post.title }}</h1>
-    <p class="date">
+    <p class="post_date">
         Published {{ post.publish }} by {{ post.author }}
     </p>
-    {{ post.body|linebreaks }}
+    <div class="post_body">
+        {{ post.body|linebreaks }}
+    </div>
+
+    {% with comments.count as total_comments %}
+        <p class="comments_count">{{ total_comments }} comment{{ total_comments|pluralize }}:</p>
+    {% endwith %}
+
+    {% for comment in comments %}
+        <div class="comment">
+            <p class="comment_info">
+                Comment {{ forloop.counter }} by {{ comment.name }}
+                {{ comment.created }}
+            </p>
+            <div class="comment_body">
+                {{ comment.body|linebreaks }}
+            </div>
+        </div>
+    {% empty %}
+        <p>There are no comments.</p>
+    {% endfor %}
+
+    {% if comment %}
+        <h3>Your comment has been added</h3>
+        {% include "blog/post/includes/comment_form.html" %}
+    {% else %}
+        {% include "blog/post/includes/comment_form.html" %}
+    {% endif %}
 {% endblock  %}
