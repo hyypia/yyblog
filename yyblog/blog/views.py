@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.decorators.http import require_POST
 
-from .models import Post
+from .models import Post, Comment
+from .forms import CommentForm
 
 
 def post_list(request):
@@ -28,3 +30,21 @@ def post_detail(request, post, year, month, day):
         publish__day=day,
     )
     return render(request, "blog/post/detail.html", {"post": post})
+
+
+@require_POST
+def post_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
+    comment = None
+    form = CommentForm(data=request.POST)
+
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.save()
+
+    return render(
+        request,
+        "blog/post/comment.html",
+        {"post": post, "form": form, "comment": comment},
+    )
