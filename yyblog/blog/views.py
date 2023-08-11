@@ -45,11 +45,11 @@ def post_comment(request, post_id):
     comment = None
     form = CommentForm(data=request.POST)
 
+    # FIXME Add auto cleaning form
     if form.is_valid():
         comment = form.save(commit=False)
         comment.post = post
         comment.save()
-        form.clean()
 
     return render(
         request,
