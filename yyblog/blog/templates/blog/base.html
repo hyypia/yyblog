@@ -12,7 +12,15 @@
             </div>
             <div id="sidebar">
                 <h2>YY Blog</h2>
-                <p>This is _hyypia's blog.</p>
+                <p>
+                    This is _hyypia's blog.<br/>
+                    Total posts: {% total_posts %}
+                </p>
+                <p>
+                    <a href="{% url 'blog:post_feed' %}">
+                        Subscribe to RSS feed
+                    </a>
+                </p>
             </div>
         </div>
     </body>
