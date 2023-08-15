@@ -64,6 +64,11 @@ p {
     border-bottom: 1px solid darkgrey;
 }
 
+.post_tags {
+    font-size: 14px;
+    font-style: italic;
+}
+
 .comment {
     border-bottom: 1px solid darkgrey;
     padding: 0px 10px 0px 10px;
@@ -74,7 +79,7 @@ p {
 }
 
 .comments_count {
-    color: brown;
+    color: black;
 }
 
 .comment_input {

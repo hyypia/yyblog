@@ -40,6 +40,21 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-taggit"
+version = "4.0.0"
+description = "django-taggit is a reusable Django application for simple tagging."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "django-taggit-4.0.0.tar.gz", hash = "sha256:4d52de9d37245a9b9f98c0ec71fdccf1d2283e38e8866d40a7ae6a3b6787a161"},
+    {file = "django_taggit-4.0.0-py3-none-any.whl", hash = "sha256:eb800dabef5f0a4e047ab0751f82cf805bc4a9e972037ef12bf519f52cd92480"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
 name = "psycopg"
 version = "3.1.10"
 description = "PostgreSQL database adapter for Python"
@@ -172,4 +187,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "c343d14a5187b90f5d57fb6d7f4abeab08859554756ca91aee94c274d7c90a14"
+content-hash = "0f015a26d950ff495a3de079d577f770f35342d094d29cb338925a64194f9706"

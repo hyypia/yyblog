@@ -10,8 +10,17 @@
         {{ post.body|linebreaks }}
     </div>
 
+    {% if similar_posts %}
+        <h2>Similar posts</h2>
+        {% for post in similar_posts %}
+            <p>
+                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            </p>
+        {% endfor %}
+    {% endif %}
+
     {% with comments.count as total_comments %}
-        <p class="comments_count">{{ total_comments }} comment{{ total_comments|pluralize }}:</p>
+        <h3 class="comments_count">{{ total_comments }} comment{{ total_comments|pluralize }}:</h3>
     {% endwith %}
 
     {% for comment in comments %}

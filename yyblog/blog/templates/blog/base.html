@@ -1,3 +1,4 @@
+{% load blog_tags %}
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -11,10 +12,17 @@
                 {% block content %}{% endblock %}
             </div>
             <div id="sidebar">
-                <h2>YY Blog</h2>
+                <h2>
+                    <a href="{% url 'blog:post_list' %}">YY Blog</a>
+                </h2>
                 <p>
                     This is _hyypia's blog.<br/>
+                    Total count of posts: <strong>{% total_posts %}</strong>
                 </p>
+                <h3>Latest posts</h3>
+                {% show_latest_posts 3 %}
+                <h3>Most commented posts</h3>
+                {% get_most_commented_posts 3 %}
             </div>
         </div>
     </body>

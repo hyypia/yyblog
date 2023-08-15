@@ -2,13 +2,23 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_POST
 from django.contrib.postgres.search import SearchVector, SearchRank, SearchQuery
+from django.db.models import Count
+from taggit.models import Tag
 
 from .models import Post
 from .forms import CommentForm, SearchForm
 
 
-def post_list(request):
+def post_list(request, tag_slug=None):
     post_list = Post.published.all()
+    tag = None
+
+    # Tag filter
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        post_list = post_list.filter(tags__in=[tag])
+
+    # Pagination
     paginator = Paginator(post_list, 3)
     page_number = request.GET.get("page", 1)
     try:
@@ -18,7 +28,7 @@ def post_list(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-    return render(request, "blog/post/list.html", {"posts": posts})
+    return render(request, "blog/post/list.html", {"posts": posts, "tag": tag})
 
 
 def post_detail(request, post, year, month, day):
@@ -30,12 +40,27 @@ def post_detail(request, post, year, month, day):
         publish__month=month,
         publish__day=day,
     )
+
+    # Similar posts list
+    post_tags_ids = post.tags.values_list("id", flat=True)
+    similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
+    similar_posts = similar_posts.annotate(same_tags=Count("tags")).order_by(
+        "-same_tags", "-publish"
+    )[:4]
+
+    # Comments
     comments = post.comments.filter(active=True)
     form = CommentForm()
+
     return render(
         request,
         "blog/post/detail.html",
-        {"post": post, "comments": comments, "form": form},
+        {
+            "post": post,
+            "similar_posts": similar_posts,
+            "comments": comments,
+            "form": form,
+        },
     )
 
 
@@ -46,11 +71,11 @@ def post_comment(request, post_id):
     comment = None
     form = CommentForm(data=request.POST)
 
-    # FIXME Add auto cleaning form
     if form.is_valid():
         comment = form.save(commit=False)
         comment.post = post
         comment.save()
+        form = CommentForm()
 
     return render(
         request,
@@ -70,10 +95,9 @@ def post_search(request):
             query = form.cleaned_data["query"]
             search_vector = SearchVector("title", "body")
             search_query = SearchQuery(query)
+            search_rank = SearchRank(search_vector, search_query)
             result = (
-                Post.published.annotate(
-                    search=search_vector, rank=SearchRank(search_vector, search_query)
-                )
+                Post.published.annotate(search=search_vector, rank=search_rank)
                 .filter(search=search_query)
                 .order_by("-rank")
             )
