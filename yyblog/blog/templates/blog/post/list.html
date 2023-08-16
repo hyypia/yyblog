@@ -4,12 +4,15 @@
 {% block title %}YY Blog{% endblock %}
 
 {% block content %}
-    <h1>YY Blog</h1>
-    {% if tag %}
-        <h2>Posts tagged with "{{ tag.name }}"</h2>
-    {% endif %}
+    <div class="title_area">
+        {% if tag %}
+            <h2 class="subtitle">Posts tagged with "{{ tag.name }}"</h2>
+        {% else %}
+            <h1 class="blog_title">YY Blog</h1>
+        {% endif %}
+    </div>
     {% for post in posts %}
-        <h2>
+        <h2 class="post_title">
             <a href="{{ post.get_absolute_url }}">
                 {{ post.title }}
             </a>
@@ -17,7 +20,7 @@
         <p class="post_date">
             Published {{ post.publish }} by {{ post.author }}
         </p>
-        {{ post.body|markdown|truncatechars_html:30 }}
+        {{ post.body|markdown|truncatechars_html:100 }}
         {% if post.tags.all %}
             <p class="post_tags">
                 Tags:
