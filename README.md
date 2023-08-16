@@ -5,6 +5,7 @@
 - Characters count in search results;
 
 ## ADD
-- Tags;
+- ~~Tags;~~
+- Markdown;
 - Feed;
 - Comment form styles.

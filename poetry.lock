@@ -55,6 +55,22 @@ files = [
 Django = ">=3.2"
 
 [[package]]
+name = "markdown"
+version = "3.4.4"
+description = "Python implementation of John Gruber's Markdown."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "Markdown-3.4.4-py3-none-any.whl", hash = "sha256:a4c1b65c0957b4bd9e7d86ddc7b3c9868fb9670660f6f99f6d1bca8954d5a941"},
+    {file = "Markdown-3.4.4.tar.gz", hash = "sha256:225c6123522495d4119a90b3a3ba31a1e87a70369e03f14799ea9c0d7183a3d6"},
+]
+
+[package.extras]
+docs = ["mdx-gh-links (>=0.2)", "mkdocs (>=1.0)", "mkdocs-nature (>=0.4)"]
+testing = ["coverage", "pyyaml"]
+
+[[package]]
 name = "psycopg"
 version = "3.1.10"
 description = "PostgreSQL database adapter for Python"
@@ -187,4 +203,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "0f015a26d950ff495a3de079d577f770f35342d094d29cb338925a64194f9706"
+content-hash = "3473d1a1aa5c6aab7f98ad06473b891e526ca60bba40377aca578f7cba5e7d8a"
