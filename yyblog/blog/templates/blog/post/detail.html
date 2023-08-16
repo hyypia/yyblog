@@ -1,4 +1,6 @@
 {% extends 'blog/base.html' %}
+{% load blog_tags %}
+
 {% block title %}{{ post.title }}{% endblock  %}
 
 {% block content %}
@@ -7,7 +9,7 @@
         Published {{ post.publish }} by {{ post.author }}
     </p>
     <div class="post_body">
-        {{ post.body|linebreaks }}
+        {{ post.body|markdown }}
     </div>
 
     {% if similar_posts %}
