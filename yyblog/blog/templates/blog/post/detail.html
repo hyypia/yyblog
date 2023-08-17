@@ -16,7 +16,7 @@
     </div>
 
     {% if similar_posts %}
-        <h2 class="subtitle">Similar posts</h2>
+        <h3 class="subtitle">Similar posts</h3>
         {% for post in similar_posts %}
             <p class="similar_post_item">
                 <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
@@ -26,7 +26,7 @@
 
     {% if comments.count %}
         {% with comments.count as total_comments %}
-            <h2 class="comments_count">{{ total_comments }} comment{{ total_comments|pluralize }}:</h2>
+            <h3 class="comments_count">{{ total_comments }} comment{{ total_comments|pluralize }}:</h3>
         {% endwith %}
 
         {% for comment in comments %}
@@ -36,7 +36,7 @@
                     {{ comment.created }}
                 </p>
                 <div class="comment_body">
-                    {{ comment.body|linebreaks }}
+                    {{ comment.body }}
                 </div>
             </div>
         {% endfor %}

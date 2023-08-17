@@ -12,6 +12,7 @@ from .forms import CommentForm, SearchForm
 def post_list(request, tag_slug=None):
     post_list = Post.published.all()
     tag = None
+    form = SearchForm()
 
     # Tag filter
     if tag_slug:
@@ -28,7 +29,11 @@ def post_list(request, tag_slug=None):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-    return render(request, "blog/post/list.html", {"posts": posts, "tag": tag})
+    return render(
+        request,
+        "blog/post/list.html",
+        {"posts": posts, "search_form": form, "tag": tag},
+    )
 
 
 def post_detail(request, post, year, month, day):
@@ -50,7 +55,8 @@ def post_detail(request, post, year, month, day):
 
     # Comments
     comments = post.comments.filter(active=True)
-    form = CommentForm()
+    comment_form = CommentForm()
+    search_form = SearchForm()
 
     return render(
         request,
@@ -59,7 +65,8 @@ def post_detail(request, post, year, month, day):
             "post": post,
             "similar_posts": similar_posts,
             "comments": comments,
-            "form": form,
+            "comment_form": comment_form,
+            "search_form": search_form,
         },
     )
 
@@ -69,30 +76,35 @@ def post_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
     comments = post.comments.filter(active=True)
     comment = None
-    form = CommentForm(data=request.POST)
+    comment_form = CommentForm(data=request.POST)
 
-    if form.is_valid():
-        comment = form.save(commit=False)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
         comment.post = post
         comment.save()
-        form = CommentForm()
+        comment_form = CommentForm()
 
     return render(
         request,
         "blog/post/detail.html",
-        {"post": post, "form": form, "comment": comment, "comments": comments},
+        {
+            "post": post,
+            "comment_form": comment_form,
+            "comment": comment,
+            "comments": comments,
+        },
     )
 
 
 def post_search(request):
-    form = SearchForm()
+    search_form = SearchForm()
     query = None
     result = []
 
     if "query" in request.GET:
-        form = SearchForm(request.GET)
-        if form.is_valid():
-            query = form.cleaned_data["query"]
+        search_form = SearchForm(request.GET)
+        if search_form.is_valid():
+            query = search_form.cleaned_data["query"]
             search_vector = SearchVector("title", "body")
             search_query = SearchQuery(query)
             search_rank = SearchRank(search_vector, search_query)
@@ -105,5 +117,5 @@ def post_search(request):
     return render(
         request,
         "blog/post/search.html",
-        {"form": form, "query": query, "result": result},
+        {"search_form": search_form, "query": query, "result": result},
     )

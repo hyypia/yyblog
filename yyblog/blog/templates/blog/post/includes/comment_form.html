@@ -1,7 +1,7 @@
 <div class="add_comment_container">
-    <h2 class="subtitle">Add a new comment</h2>
+    <h3 class="subtitle">Add a new comment</h3>
     <form class="comment_form" action="{% url 'blog:post_comment' post.id %}" method="post">
-        {{ form.as_p }}
+        {{ comment_form.as_p }}
         {% csrf_token %}
         <div class="comment_button_container">
             <input class="comment_input" type="submit" value="Add">

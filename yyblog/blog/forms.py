@@ -3,7 +3,7 @@ from .models import Comment
 
 
 class SearchForm(forms.Form):
-    query = forms.CharField()
+    query = forms.CharField(label="")
 
 
 class CommentForm(forms.ModelForm):

@@ -1,0 +1,6 @@
+<div class="search_form_container">
+    <form class="search_form" action="{% url 'blog:post_search' %}" method="get">
+        {{ search_form.as_p }}
+        <input class="search_button" type="submit" value="Search">
+    </form>
+</div>
