@@ -23,8 +23,10 @@
                 {% include "blog/post/includes/search_form.html" %}
                 <h3>Latest posts</h3>
                 {% show_latest_posts 3 %}
-                <h3>Most commented posts</h3>
-                {% get_most_commented_posts 3 %}
+                {% if comments.count %}
+                    <h3>Most commented posts</h3>
+                    {% get_most_commented_posts 3 %}
+                {% endif %}
             </div>
         </div>
     </body>

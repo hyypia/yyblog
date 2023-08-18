@@ -3,3 +3,4 @@ config/
 db.sqlite3
 *.pyc
 .superuser
+.env
