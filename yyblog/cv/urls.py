@@ -2,8 +2,6 @@ from django.urls import path
 
 from . import views
 
-app_name = "cv"
+app_name = "about"
 
-urlpatterns = [
-    path("")
-]
+urlpatterns = [path("", views.get_about_page)]

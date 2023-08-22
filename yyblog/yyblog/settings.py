@@ -13,6 +13,7 @@ dotenv_path = os.path.join(BASE_DIR, ".env")
 if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
 
+# Secret... Not... VERY SECRET key
 SECRET_KEY = os.getenv("DJANGO_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -23,7 +24,6 @@ ALLOWED_HOSTS = []
 SITE_ID = 1
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -54,7 +54,7 @@ ROOT_URLCONF = "yyblog.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "frontend/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

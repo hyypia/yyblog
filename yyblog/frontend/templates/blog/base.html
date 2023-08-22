@@ -12,6 +12,7 @@
             <div id="content">
                 {% block content %}{% endblock %}
             </div>
+
             <div id="sidebar">
                 <h2>
                     <a href="{% url 'blog:post_list' %}">YY Notes</a>
@@ -21,12 +22,12 @@
                     Total count of posts: <strong>{% total_posts %}</strong>
                 </p>
                 {% include "blog/post/includes/search_form.html" %}
+
                 <h3>Latest posts</h3>
                 {% show_latest_posts 3 %}
-                {% if comments.count %}
-                    <h3>Most commented posts</h3>
-                    {% get_most_commented_posts 3 %}
-                {% endif %}
+
+                <h3>Most commented posts</h3>
+                {% get_most_commented_posts 3 %}
             </div>
         </div>
     </body>
